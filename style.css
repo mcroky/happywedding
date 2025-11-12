@@ -147,6 +147,13 @@ nav a:hover { color: #ffdef0; text-shadow: 0 0 12px #fff; }
 }
 
 
+/* 모바일 화면용 */
+@media (max-width: 768px) {
+  .slides img {
+    max-width: 90%;  /* 화면 거의 가득 채우기 */
+    margin: 0 auto;  /* 가운데 정렬 */
+  }
+}
 /* Message */
 .message { text-align: center; padding: 120px 20px; background: rgba(255,255,255,0.08); }
 textarea {
