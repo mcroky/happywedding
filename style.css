@@ -1,0 +1,466 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=Pretendard:wght@400;600&display=swap');
+
+html, body {
+  margin: 0; padding: 0;
+  overflow-x: hidden;
+  scroll-behavior: smooth;
+  font-family: 'Pretendard', sans-serif;
+}
+body {
+  color: #fff;
+  background: radial-gradient(ellipse at bottom, #1a0921 0%, #0d0010 100%);
+}
+
+/* 🌠 모든 캔버스 */
+#stars, #petals, #fx, #hearts {
+  position: fixed; top: 0; left: 0;
+  width: 100%; height: 100%;
+  pointer-events: none;
+}
+#stars { z-index: -4; }
+#petals { z-index: -3; }
+#fx { z-index: -2; }
+#hearts { z-index: -1; }
+
+/* 🎵 음악 컨트롤 */
+.music-control {
+  position: fixed; right: 20px; bottom: 20px; z-index: 10;
+}
+.music-control button {
+  font-size: 1.8em; background: rgba(255,255,255,0.2);
+  border: none; border-radius: 50%;
+  padding: 10px; color: #fff; cursor: pointer;
+  box-shadow: 0 0 10px rgba(255,255,255,0.4);
+  transition: 0.3s;
+}
+.music-control button:hover {
+  background: rgba(255,192,203,0.5);
+  transform: scale(1.2);
+}
+
+/* 💍 헤더 */
+header {
+  position: fixed; top: 0; width: 100%;
+  text-align: center; background: rgba(255, 182, 193, 0.15);
+  backdrop-filter: blur(15px); padding: 20px 0; z-index: 100;
+  transition: 0.3s;
+}
+header.scrolled {
+  background: rgba(255,182,193,0.35);
+  box-shadow: 0 4px 10px rgba(255,182,193,0.3);
+}
+nav a {
+  margin: 0 15px; text-decoration: none;
+  color: white; font-weight: bold; transition: 0.3s;
+}
+nav a:hover { color: #ffdef0; text-shadow: 0 0 12px #fff; }
+
+/* Hero */
+.hero {
+  height: 100vh; display: flex;
+  align-items: center; justify-content: center;
+  background: url('images/bg.jpg') no-repeat center/cover fixed;
+  text-align: center; position: relative;
+}
+.hero-inner {
+  background: rgba(255,255,255,0.15);
+  padding: 60px; border-radius: 30px;
+  backdrop-filter: blur(10px);
+  animation: fadeIn 2.5s ease;
+}
+.scroll-btn {
+  display: inline-block; margin-top: 25px;
+  background: linear-gradient(45deg, #ff8ab5, #ffc0cb);
+  padding: 12px 30px; border-radius: 30px;
+  color: white; text-decoration: none; font-weight: bold;
+  transition: 0.3s;
+}
+.scroll-btn:hover {
+  transform: scale(1.08); box-shadow: 0 0 15px #fff;
+}
+
+/* Story */
+.story { text-align: center; padding: 150px 20px; }
+.section-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 2em; margin-bottom: 50px;
+  text-shadow: 0 0 10px #ffb6c1;
+}
+.timeline {
+  position: relative; max-width: 800px; margin: 0 auto;
+}
+.event-content {
+  background: rgba(255,255,255,0.2);
+  padding: 25px; border-radius: 20px;
+  box-shadow: 0 4px 20px rgba(255,255,255,0.15);
+  transform: translateY(40px); opacity: 0;
+  transition: all 1s ease;
+}
+.event-content.visible { opacity: 1; transform: translateY(0); }
+.glass { backdrop-filter: blur(10px); }
+
+/* Gallery */
+.gallery { text-align: center; padding: 120px 20px; background: rgba(255,255,255,0.05); }
+.slider { width: 80%; margin: 0 auto; overflow: hidden; border-radius: 20px; box-shadow: 0 4px 20px rgba(255,182,193,0.5); }
+.slides { display: flex; width: 400%; animation: slideShow 18s infinite; }
+.slides img { width: 100%; border-radius: 20px; transition: transform 0.5s; }
+.slides img:hover { transform: scale(1.05); }
+@keyframes slideShow {
+  0%{transform:translateX(0)}25%{transform:translateX(-100%)}50%{transform:translateX(-200%)}75%{transform:translateX(-300%)}100%{transform:translateX(0)}
+}
+
+/* Message */
+.message { text-align: center; padding: 120px 20px; background: rgba(255,255,255,0.08); }
+textarea {
+  width: 70%; height: 130px; border-radius: 15px;
+  border: none; padding: 15px; font-size: 1em;
+  outline: none; background: rgba(255,255,255,0.85);
+  color: #333; box-shadow: 0 0 15px rgba(255,192,203,0.5);
+}
+button {
+  margin-top: 15px; padding: 12px 30px;
+  border-radius: 30px; border: none; color: white;
+  font-weight: bold; background: linear-gradient(45deg, #ff7da5, #ffb6c1);
+  cursor: pointer; transition: 0.3s;
+}
+button:hover { transform: scale(1.08); box-shadow: 0 0 15px #fff; }
+
+/* Footer */
+footer {
+  text-align: center; padding: 40px; background: rgba(0,0,0,0.3);
+  font-family: 'Playfair Display', serif;
+}
+
+/* 🎬 씬 전환 & 비네트 */
+#scene-transition {
+  position: fixed; inset: 0;
+  background: #000; opacity: 0;
+  pointer-events: none; z-index: 15;
+  transform: scale(1);
+  transition: opacity 480ms ease, transform 480ms ease;
+}
+#scene-transition.active { opacity: 1; transform: scale(1.02); }
+#vignette {
+  position: fixed; inset: 0;
+  pointer-events: none; z-index: 5;
+  background: radial-gradient(ellipse at center, rgba(0,0,0,0) 60%, rgba(0,0,0,0.35) 100%);
+  mix-blend-mode: multiply;
+}
+section[data-scene] {
+  will-change: transform, opacity, filter;
+  transform: scale(0.985); opacity: 0.94;
+  transition: transform 700ms ease, opacity 700ms ease, filter 700ms ease;
+  filter: saturate(0.9) brightness(0.98);
+}
+section[data-scene].scene-in {
+  transform: scale(1); opacity: 1;
+  filter: saturate(1.05) brightness(1);
+}
+section[data-scene].scene-focus {
+  transform: scale(1.012);
+  filter: saturate(1.15) brightness(1.04);
+}
+/* 🌗 테마별 분위기 전환용 보조 스타일 */
+body[data-theme="morning"] {
+  transition: background 1.5s ease;
+  color: #5a3e46;
+}
+body[data-theme="day"] {
+  color: #444;
+}
+body[data-theme="evening"] {
+  color: #fff5f5;
+  text-shadow: 0 0 10px rgba(255,255,255,0.3);
+}
+body[data-theme="night"] {
+  color: #f7eaff;
+  text-shadow: 0 0 12px rgba(255,255,255,0.4);
+}
+/********************************************
+ * 🎬 Intro Sequence Styles
+ ********************************************/
+ /* 🌌 인트로 별 반짝이 캔버스 */
+#intro-stars {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 998;
+  pointer-events: none;
+  opacity: 0.7;
+}
+
+#intro {
+  position: fixed;
+  inset: 0;
+  z-index: 999;
+  background: radial-gradient(ellipse at center, #120010 0%, #000 100%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  opacity: 1;
+  pointer-events: all;
+  transition: opacity 2s ease;
+}
+
+#intro.fade-out {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.intro-inner {
+  text-align: center;
+  animation: zoomIn 2.5s ease forwards;
+}
+
+.intro-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 3.2rem;
+  color: #ffb6c1;
+  text-shadow: 0 0 20px rgba(255,182,193,0.6), 0 0 40px rgba(255,105,180,0.4);
+  opacity: 0;
+  animation: fadeInTitle 2s ease forwards 0.5s;
+}
+
+.intro-subtitle {
+  font-size: 1.4rem;
+  color: #ffe6f0;
+  opacity: 0;
+  margin-top: 20px;
+  animation: fadeInSubtitle 2s ease forwards 2s;
+}
+
+/* Animation keyframes */
+@keyframes fadeInTitle {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeInSubtitle {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes zoomIn {
+  from { transform: scale(0.95); }
+  to { transform: scale(1); }
+}
+/* 🌠 타이틀 별빛 디졸브용 캔버스 */
+#intro-dissolve {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  pointer-events: none;
+  z-index: 999;
+  opacity: 0;
+  transition: opacity 0.5s ease;
+}
+#intro-dissolve.active {
+  opacity: 1;
+}
+/********************************************
+ * 🎞️ 엔딩 시퀀스 텍스트
+ ********************************************/
+#intro-ending-text {
+  position: absolute;
+  bottom: 15%;
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: 'Playfair Display', serif;
+  font-size: 1.6rem;
+  color: rgba(255, 240, 245, 0.0);
+  text-shadow: 0 0 15px rgba(255, 200, 230, 0.3);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 1.8s ease, color 1.8s ease;
+  z-index: 1000;
+}
+
+#intro-ending-text.active {
+  opacity: 1;
+  color: rgba(255, 240, 245, 0.95);
+}
+/* 🌠 엔딩 자막 오라 별 캔버스 */
+#ending-stars {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 40%;
+  pointer-events: none;
+  z-index: 999;
+  opacity: 0;
+  transition: opacity 1s ease;
+}
+#ending-stars.active {
+  opacity: 1;
+}
+/* 💫 글자별 별빛 디졸브 효과 */
+/********************************************
+ * 🎞️ 엔딩 시퀀스 텍스트 (업데이트 버전)
+ ********************************************/
+#intro-ending-text {
+  position: absolute;
+  bottom: 18%;
+  left: 50%;
+  transform: translateX(-50%) scale(0.97);
+  font-family: 'Playfair Display', serif;
+  font-size: 2.2rem;
+  font-weight: 600;
+  letter-spacing: 1.5px;
+  color: rgba(255,255,255,0);
+  text-shadow:
+    0 0 25px rgba(255, 210, 230, 0.5),
+    0 0 45px rgba(255, 240, 255, 0.4),
+    0 0 90px rgba(255, 160, 220, 0.3);
+  opacity: 0;
+  pointer-events: none;
+  z-index: 2000;
+  transition:
+    opacity 2.5s ease-in-out,
+    color 2.5s ease,
+    transform 2.5s ease,
+    text-shadow 2.5s ease;
+}
+
+#intro-ending-text.active {
+  opacity: 1;
+  color: #ffffff;
+  transform: translateX(-50%) scale(1);
+  text-shadow:
+    0 0 35px rgba(255,200,220,0.9),
+    0 0 70px rgba(255,180,230,0.7),
+    0 0 120px rgba(255,140,220,0.5);
+}
+
+#intro-ending-text.fade-out {
+  opacity: 0;
+  transform: translateX(-50%) scale(1.05);
+  text-shadow:
+    0 0 15px rgba(255,180,220,0.3),
+    0 0 40px rgba(255,140,200,0.1);
+  transition:
+    opacity 3s ease,
+    transform 3s ease,
+    text-shadow 3s ease;
+}
+/********************************************
+ * 🎞️ 유튜브 영상 모달 스타일
+ ********************************************/
+/* 🎬 썸네일 컨테이너 중앙 정렬 */
+.video-thumbnail {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 80px auto;
+  cursor: pointer;
+  width: 90%;
+  max-width: 480px;
+  transition: transform 0.3s ease;
+}
+
+.video-thumbnail img {
+  width: 100%;
+  border-radius: 20px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.5);
+  transition: transform 0.4s ease;
+}
+
+.video-thumbnail:hover {
+  transform: scale(1.03);
+}
+
+.play-icon {
+  position: absolute;
+  font-size: 4rem;
+  color: white;
+  text-shadow: 0 0 20px rgba(0, 0, 0, 0.7);
+  pointer-events: none;
+  transition: transform 0.3s ease;
+}
+
+.video-thumbnail:hover .play-icon {
+  transform: scale(1.1);
+}
+.video-modal .video-content {
+  opacity: 0;
+  transform: scale(0.9);
+  transition: all 0.4s ease;
+}
+.video-modal.active .video-content {
+  opacity: 1;
+  transform: scale(1);
+}
+.video-thumbnail {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 80px auto;
+  cursor: pointer;
+  width: 90%;
+  max-width: 480px;
+}
+
+.video-thumbnail img {
+  width: 100%;
+  border-radius: 16px;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.5);
+}
+
+.play-icon {
+  position: absolute;
+  font-size: 4rem;
+  color: white;
+  text-shadow: 0 0 20px rgba(0,0,0,0.7);
+  pointer-events: none;
+}
+
+.video-modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.85);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.4s ease;
+  z-index: 5000;
+}
+.video-modal.active {
+  opacity: 1;
+  pointer-events: all;
+}
+
+.video-content {
+  position: relative;
+  width: 80%;
+  max-width: 900px;
+  aspect-ratio: 16/9;
+  background: #000;
+  border-radius: 16px;
+  overflow: hidden;
+  transform: scale(0.9);
+  transition: transform 0.4s ease;
+}
+.video-modal.active .video-content {
+  transform: scale(1);
+}
+
+.video-content iframe {
+  width: 100%;
+  height: 100%;
+  border: none;
+}
+.youtube-card {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  min-height: 100vh; /* 화면 중앙 정렬 위해 높이 추가 */
+  margin: 0; /* 상하 여백 제거 */
+}
