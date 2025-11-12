@@ -518,26 +518,23 @@ window.addEventListener("load", () => {
   const bgMusic = document.getElementById("bgMusic");
   const introSound = document.getElementById("introSound");
 
-  // 1) 인트로 사운드 재생 (피아노 음)
+  // 🎹 인트로 효과음 (짧은 피아노)
   try {
     introSound.volume = 0.6;
     introSound.currentTime = 0;
-    introSound.play().catch(() => {
-      // 브라우저 자동재생 제한이 걸리면 사용자가 첫 클릭 시 재생됨
-    });
-  } catch (e) {
-    console.warn("Intro sound could not play automatically:", e);
-  }
+    introSound.play().catch(() => {});
+  } catch (e) {}
 
-  // 2) 인트로 4초 유지 후 페이드아웃
+  // 🎬 인트로 4초 후 페이드아웃
   setTimeout(() => {
     intro.classList.add("fade-out");
   }, 4000);
 
-  // 3) 인트로 종료 후 배경음악 천천히 시작
+  // 🎵 배경음악 자동재생 (muted → 서서히 볼륨 업)
   setTimeout(() => {
     try {
       bgMusic.volume = 0;
+      bgMusic.muted = false; // 🔊 음소거 해제
       const playPromise = bgMusic.play();
       if (playPromise !== undefined) {
         playPromise.then(() => {
@@ -549,8 +546,10 @@ window.addEventListener("load", () => {
           }, 150);
         });
       }
-    } catch (e) {}
-  }, 4500);
+    } catch (e) {
+      console.warn("bgMusic autoplay blocked:", e);
+    }
+  }, 4500); // 인트로가 끝날 때쯤 시작
 });
 
 /****************************************************

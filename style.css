@@ -109,44 +109,41 @@ nav a:hover { color: #ffdef0; text-shadow: 0 0 12px #fff; }
   0%{transform:translateX(0)}25%{transform:translateX(-100%)}50%{transform:translateX(-200%)}75%{transform:translateX(-300%)}100%{transform:translateX(0)}
 }*/
 
-/* Gallery */
 .gallery {
   text-align: center;
-  padding: 100px 0;
+  padding: 80px 0;
   background: rgba(255, 255, 255, 0.05);
 }
 
 .slider {
-  width: 60%; /* 슬라이드 창 크기를 줄임 */
+  width: 50%;
+  max-width: 800px;
   margin: 0 auto;
   overflow: hidden;
   border-radius: 15px;
   box-shadow: 0 4px 20px rgba(255, 182, 193, 0.5);
+  background: rgba(0, 0, 0, 0.2);
 }
 
 .slides {
   display: flex;
-  width: 400%;
-  animation: slideShow 32s infinite;
+  width: calc(200%);                /* 복제된 이미지까지 포함 */
+  animation: slideLoop 40s linear infinite; /* linear로 일정하게 이동 */
 }
 
 .slides img {
-  width: 25%;
+  width: 12.5%;                     /* 총 8장 → 100 / 8 = 12.5 */
   height: auto;
+  object-fit: contain;
+  background: #000;
   border-radius: 0;
-  margin: 0;
-  padding: 0;
-  object-fit: cover; /* 이미지 꽉 채움 */
-  transition: none;  /* 확대 효과 제거 */
+  transition: none;
 }
 
-/* 슬라이드 이동 애니메이션 */
-@keyframes slideShow {
-  0%   { transform: translateX(0); }
-  25%  { transform: translateX(-100%); }
-  50%  { transform: translateX(-200%); }
-  75%  { transform: translateX(-300%); }
-  100% { transform: translateX(0); }
+/* 🚀 끊김 없는 무한 루프 */
+@keyframes slideLoop {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); } /* 한 세트(4장)만큼 이동 */
 }
 
 

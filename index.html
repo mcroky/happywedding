@@ -7,7 +7,7 @@
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-<body onclick="document.getElementById('bgMusic').play(); this.onclick=null;">
+
 <!-- 🎬 Intro Sequence -->
 <div id="intro">
   <canvas id="intro-stars"></canvas>
@@ -15,7 +15,7 @@
     <h1 class="intro-title">Eternal Love Story</h1>
     <p class="intro-subtitle">A Journey Written in Time 💫</p>
   </div>
-  <canvas id="intro-dissolve"></canvas>   
+  <canvas id="intro-dissolve"></canvas>  
 <!-- 🎞️ 엔딩 자막 -->
 <div id="intro-ending-text">
   <span>우</span><span>리</span><span>의</span><span> </span>
@@ -139,9 +139,15 @@
       <img src="images/photo2.jpg" alt="photo2">
       <img src="images/photo3.jpg" alt="photo3">
       <img src="images/photo4.jpg" alt="photo4">
+      <!-- 복제 (끊김 없는 루프용) -->
+      <img src="images/photo1.jpg" alt="photo1 copy">
+      <img src="images/photo2.jpg" alt="photo2 copy">
+      <img src="images/photo3.jpg" alt="photo3 copy">
+      <img src="images/photo4.jpg" alt="photo4 copy">
     </div>
   </div>
 </section>
+
 
 
   <!-- 💌 Message Section -->
@@ -158,18 +164,17 @@
   </footer>
 
   <!-- 🎵 배경음악 -->
-  <audio id="bgMusic" loop autoplay>
+  <audio id="bgMusic" loop autoplay muted>
     <source src="music/love-theme.mp3" type="audio/mpeg">
   </audio>
 <!-- 🎹 인트로 피아노 효과음 (짧은 사운드) -->
-<audio id="introSound" autoplay>
+<audio id="introSound" autoplay muted>
   <source src="music/intro-piano.mp3" type="audio/mpeg">
 </audio>
   <!-- ✨ 스크립트 -->
   <script src="script.js"></script>
 </body>
 </html>
-
 
 
 
