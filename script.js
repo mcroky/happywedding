@@ -335,32 +335,52 @@ function windUpdate() {
 windUpdate();
 
 /****************************************************
- * 🎵 8. 음악 컨트롤
+ * 🎵 8. 음악 컨트롤 (수정된 버전)
  ****************************************************/
 const bgMusic = document.getElementById("bgMusic");
 const musicToggle = document.getElementById("musicToggle");
-let musicPlaying = false;
+let musicPlaying = false; 
+
 if (musicToggle && bgMusic) {
-  musicToggle.addEventListener("click", () => {
-    if (!musicPlaying) {
-      bgMusic.volume = 0;
-      const playPromise = bgMusic.play();
-      if (playPromise !== undefined) {
-        playPromise.then(() => {
-          let vol = 0;
-          const fade = setInterval(() => {
-            vol = Math.min(1, vol + 0.05);
-            bgMusic.volume = vol;
-            if (vol >= 1) clearInterval(fade);
-          }, 100);
-          musicPlaying = true;
-        });
-      }
-    } else {
-      bgMusic.pause();
-      musicPlaying = false;
-    }
-  });
+    // 페이지 로드 시 음악이 이미 'muted' 상태로 자동 재생되었을 수 있음.
+    // 여기서는 버튼이 '재생' 역할을 한다고 가정하고 초기 상태를 false로 설정합니다.
+    
+    musicToggle.addEventListener("click", () => {
+        if (!musicPlaying) {
+            
+            // 1. 음소거 상태라면 해제
+            bgMusic.muted = false; 
+            
+            // 2. 현재 볼륨을 0으로 설정 (Fade In 시작)
+            bgMusic.volume = 0; 
+            
+            const playPromise = bgMusic.play();
+            
+            if (playPromise !== undefined) {
+                playPromise.then(() => {
+                    // Fade In 로직은 그대로 유지
+                    let vol = 0;
+                    const fade = setInterval(() => {
+                        vol = Math.min(1, vol + 0.05);
+                        bgMusic.volume = vol;
+                        if (vol >= 1) clearInterval(fade);
+                    }, 100);
+                    
+                    musicPlaying = true;
+                }).catch(error => {
+                    // 브라우저가 자동 재생을 막았을 때의 예외 처리
+                    console.log("음악 재생 실패 (브라우저 정책): ", error);
+                });
+            }
+        } else {
+            // 정지 (Pause)
+            bgMusic.pause();
+            musicPlaying = false;
+        }
+    });
+    
+    // 💡 참고: 만약 배경음악을 완전히 멈추지 않고 버튼으로 '음소거/음소거 해제'만 토글하려면 
+    // 위 로직 대신 'bgMusic.muted = !bgMusic.muted;' 로직을 사용해야 합니다.
 }
 
 /****************************************************
@@ -840,3 +860,4 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 });
+
