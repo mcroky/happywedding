@@ -102,8 +102,8 @@ nav a:hover { color: #ffdef0; text-shadow: 0 0 12px #fff; }
 /* Gallery */
 .gallery { text-align: center; padding: 120px 20px; background: rgba(255,255,255,0.05); }
 .slider { width: 80%; margin: 0 auto; overflow: hidden; border-radius: 20px; box-shadow: 0 4px 20px rgba(255,182,193,0.5); }
-.slides { display: flex; width: 400%; animation: slideShow 18s infinite; }
-.slides img { width: 25%; border-radius: 20px; transition: transform 0.5s; }
+.slides { display: flex; width: 400%; animation: slideShow 32s infinite; }
+.slides img { width: 25%; height: auto; border-radius: 20px; transition: transform 0.5s; }
 .slides img:hover { transform: scale(1.05); }
 @keyframes slideShow {
   0%{transform:translateX(0)}25%{transform:translateX(-100%)}50%{transform:translateX(-200%)}75%{transform:translateX(-300%)}100%{transform:translateX(0)}
@@ -482,4 +482,5 @@ body[data-theme="night"] {
     border-radius: 12px;
   }
 }
+
 
