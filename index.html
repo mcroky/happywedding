@@ -7,7 +7,7 @@
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-
+<body onclick="document.getElementById('bgMusic').play(); this.onclick=null;">
 <!-- 🎬 Intro Sequence -->
 <div id="intro">
   <canvas id="intro-stars"></canvas>
@@ -15,7 +15,7 @@
     <h1 class="intro-title">Eternal Love Story</h1>
     <p class="intro-subtitle">A Journey Written in Time 💫</p>
   </div>
-  <canvas id="intro-dissolve"></canvas>  
+  <canvas id="intro-dissolve"></canvas>   
 <!-- 🎞️ 엔딩 자막 -->
 <div id="intro-ending-text">
   <span>우</span><span>리</span><span>의</span><span> </span>
@@ -169,6 +169,7 @@
   <script src="script.js"></script>
 </body>
 </html>
+
 
 
 
