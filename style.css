@@ -461,6 +461,24 @@ body[data-theme="night"] {
   justify-content: center;
   align-items: center;
   width: 100%;
-  min-height: 100vh; /* 화면 중앙 정렬 위해 높이 추가 */
-  margin: 0; /* 상하 여백 제거 */
+  margin: 40px auto;
+  padding: 0 10px;
+  max-width: 600px;  /* 데스크탑에서도 너무 커지지 않게 */
+}
+
+.youtube-thumb {
+  width: 100%;
+  height: auto;
+  border-radius: 16px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.5);
+}
+
+/* 🎯 반응형 조정 */
+@media (max-width: 480px) {
+  .youtube-card {
+    margin: 20px auto;
+  }
+  .youtube-thumb {
+    border-radius: 12px;
+  }
 }
