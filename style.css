@@ -99,7 +99,7 @@ nav a:hover { color: #ffdef0; text-shadow: 0 0 12px #fff; }
 .event-content.visible { opacity: 1; transform: translateY(0); }
 .glass { backdrop-filter: blur(10px); }
 
-/* Gallery */
+/* Gallery 
 .gallery { text-align: center; padding: 120px 20px; background: rgba(255,255,255,0.05); }
 .slider { width: 80%; margin: 0 auto; overflow: hidden; border-radius: 20px; box-shadow: 0 4px 20px rgba(255,182,193,0.5); }
 .slides { display: flex; width: 400%; animation: slideShow 32s infinite; }
@@ -107,7 +107,48 @@ nav a:hover { color: #ffdef0; text-shadow: 0 0 12px #fff; }
 .slides img:hover { transform: scale(1.05); }
 @keyframes slideShow {
   0%{transform:translateX(0)}25%{transform:translateX(-100%)}50%{transform:translateX(-200%)}75%{transform:translateX(-300%)}100%{transform:translateX(0)}
+}*/
+
+/* Gallery */
+.gallery {
+  text-align: center;
+  padding: 100px 0;
+  background: rgba(255, 255, 255, 0.05);
 }
+
+.slider {
+  width: 60%; /* 슬라이드 창 크기를 줄임 */
+  margin: 0 auto;
+  overflow: hidden;
+  border-radius: 15px;
+  box-shadow: 0 4px 20px rgba(255, 182, 193, 0.5);
+}
+
+.slides {
+  display: flex;
+  width: 400%;
+  animation: slideShow 32s infinite;
+}
+
+.slides img {
+  width: 25%;
+  height: auto;
+  border-radius: 0;
+  margin: 0;
+  padding: 0;
+  object-fit: cover; /* 이미지 꽉 채움 */
+  transition: none;  /* 확대 효과 제거 */
+}
+
+/* 슬라이드 이동 애니메이션 */
+@keyframes slideShow {
+  0%   { transform: translateX(0); }
+  25%  { transform: translateX(-100%); }
+  50%  { transform: translateX(-200%); }
+  75%  { transform: translateX(-300%); }
+  100% { transform: translateX(0); }
+}
+
 
 /* Message */
 .message { text-align: center; padding: 120px 20px; background: rgba(255,255,255,0.08); }
@@ -482,5 +523,6 @@ body[data-theme="night"] {
     border-radius: 12px;
   }
 }
+
 
 
